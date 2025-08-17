@@ -35,12 +35,15 @@ const importData = async () => {
             confirmAction('❗ Are you sure you want to import new data? This will overwrite existing data', async () => {
                 try {
                     await User.deleteMany()
+                    await Order.deleteMany()
                     await Course.deleteMany()
+                    await StudentCourses.deleteMany()
+                    await CourseProgress.deleteMany()
 
                     await User.insertMany(users)
                     await Course.insertMany(courses)
 
-                    console.log('✔️  DATA UPDATED')
+                    console.log('✔️  DATA OVERWRITTEN')
                     process.exit()
                 } catch (err) {
                     console.log(err)
