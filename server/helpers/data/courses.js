@@ -47,9 +47,9 @@ module.exports = [
     curriculum: [
       { title: "Node.js Overview", video_url: "https://www.youtube.com/watch?v=fBNz5xF-Kx4", public_id: "5t9w3r7q2m8", preview: true },
       { title: "Setting Up Express", video_url: "https://www.youtube.com/watch?v=L72fhGm1tfE", public_id: "2k5p8v3x9m7", preview: false },
-      { title: "Authentication Basics", video_url: "https://www.youtube.com/watch?v=mbsmsi7l3r4", public_id: "nd6b2", preview: false },
+      { title: "Authentication Basics", video_url: "https://www.youtube.com/watch?v=mbsmsi7l3r4", public_id: "nd6b2", preview: true },
       { title: "Working with MongoDB", video_url: "https://www.youtube.com/watch?v=5yTazHkDR4o", public_id: "nd6d4", preview: false },
-      { title: "Project: Blog API", video_url: "https://www.youtube.com/watch?v=SBvmnHTQIPY", public_id: "nd6i9", preview: false }
+      { title: "Project: Blog API", video_url: "https://www.youtube.com/watch?v=SBvmnHTQIPY", public_id: "nd6i9", preview: true }
     ],
     students: []
   },
@@ -71,11 +71,11 @@ module.exports = [
     isPublished: true,
     curriculum: [
       { title: "What is Data Science?", video_url: "https://www.youtube.com/watch?v=xC-c7E5PK0Y", public_id: "7q2t5r9w3v6", preview: true },
-      { title: "Python for Data Analysis", video_url: "https://www.youtube.com/watch?v=r-uOLxNrNk8", public_id: "8v3x6r9t2q5", preview: false },
+      { title: "Python for Data Analysis", video_url: "https://www.youtube.com/watch?v=r-uOLxNrNk8", public_id: "8v3x6r9t2q5", preview: true },
       { title: "Intro to Machine Learning", video_url: "https://www.youtube.com/watch?v=GwIo3gDZCVQ", public_id: "9v3x6r7q2t5", preview: false },
       { title: "Numpy Basics", video_url: "https://www.youtube.com/watch?v=xECUrlnXCqk", public_id: "ds6a1", preview: false },
       { title: "Pandas Introduction", video_url: "https://www.youtube.com/watch?v=dcqPhpY7tWk", public_id: "ds6b2", preview: false },
-      { title: "Basic Statistics", video_url: "https://www.youtube.com/watch?v=uhxtUt_-GyM", public_id: "ds6d4", preview: false },
+      { title: "Basic Statistics", video_url: "https://www.youtube.com/watch?v=uhxtUt_-GyM", public_id: "ds6d4", preview: true },
       { title: "Matplotlib Tutorial", video_url: "https://www.youtube.com/watch?v=3Xc3CA655Y4", public_id: "ds6e5", preview: false },
       { title: "Exploratory Data Analysis", video_url: "https://www.youtube.com/watch?v=ua-CiDNNj30", public_id: "ds6f6", preview: false }
     ],
@@ -98,7 +98,7 @@ module.exports = [
     objectives: "Unpack keyword strategies to target the right audience, perfect on-page SEO for maximum visibility, build powerful links to enhance authority, leverage SEO tools to streamline your efforts, track ranking progress to refine your approach",
     isPublished: true,
     curriculum: [
-      { title: "Just copy this guy", video_url: "https://www.youtube.com/watch?v=0e3GPea1Tyg", public_id: "seo6f6", preview: true }
+      { title: "Just copy this guy", video_url: "https://www.youtube.com/watch?v=0e3GPea1Tyg", public_id: "seo6f6", preview: false }
     ],
     students: []
   },
@@ -120,7 +120,7 @@ module.exports = [
     isPublished: true,
     curriculum: [
       { title: "HTML and CSS Basics", video_url: "https://www.youtube.com/watch?v=UB1O30fR-EE", public_id: "3m7p9k2v5x8", preview: true },
-      { title: "JavaScript for Frontend", video_url: "https://www.youtube.com/watch?v=PkZNo7MFNFg", public_id: "9v3x6r7q2t5", preview: false },
+      { title: "JavaScript for Frontend", video_url: "https://www.youtube.com/watch?v=PkZNo7MFNFg", public_id: "9v3x6r7q2t5", preview: true },
       { title: "Node.js Backend", video_url: "https://www.youtube.com/watch?v=fBNz5xF-Kx4", public_id: "5t9w3r7q2m8", preview: true },
       { title: "Full-Stack Project", video_url: "https://www.youtube.com/watch?v=8aGhZQkoFbQ", public_id: "7q2t5r9w3v6", preview: false },
       { title: "React Basics", video_url: "https://www.youtube.com/watch?v=SqcY0GlETPk", public_id: "fs6a1", preview: false },
@@ -147,8 +147,8 @@ module.exports = [
     objectives: "Understand UX principles for user-centered design, create wireframes and prototypes, learn Figma and Adobe XD tools, design responsive layouts for mobile and web, master accessibility for inclusive experiences",
     isPublished: true,
     curriculum: [
-      { title: "Color Theory", video_url: "https://www.youtube.com/watch?v=Qj1FK8n7WgY", public_id: "ux6a1", preview: false },
-      { title: "Figma Tutorial", video_url: "https://www.youtube.com/watch?v=Cx2dkpBxst8", public_id: "ux6c3", preview: true },
+      { title: "Color Theory", video_url: "https://www.youtube.com/watch?v=Qj1FK8n7WgY", public_id: "ux6a1", preview: true },
+      { title: "Figma Tutorial", video_url: "https://www.youtube.com/watch?v=Cx2dkpBxst8", public_id: "ux6c3", preview: false },
       { title: "Responsive Design", video_url: "https://www.youtube.com/watch?v=srvUrASNj0s", public_id: "ux6d4", preview: false },
       { title: "Accessibility Guidelines", video_url: "https://www.youtube.com/watch?v=3f31oufqFSM", public_id: "ux6e5", preview: false }
     ],
@@ -174,11 +174,11 @@ module.exports = [
       { title: "OOP in Python", video_url: "https://www.youtube.com/watch?v=Ej_02ICOIgs", public_id: "6r9t3w7q2m5", preview: true },
       { title: "Data Science with Python", video_url: "https://www.youtube.com/watch?v=xC-c7E5PK0Y", public_id: "2k5p8v3x9m7", preview: false },
       { title: "Decorators Explained", video_url: "https://www.youtube.com/watch?v=FsAPt_9Bf3U", public_id: "8q2t6r9w3v5", preview: false },
-      { title: "Working with Flask", video_url: "https://www.youtube.com/watch?v=MwZwr5Tvyxo", public_id: "3m7p9k2v5x8", preview: false },
+      { title: "Working with Flask", video_url: "https://www.youtube.com/watch?v=MwZwr5Tvyxo", public_id: "3m7p9k2v5x8", preview: true },
       { title: "File Handling and Modules", video_url: "https://www.youtube.com/watch?v=Uh2ebFW8OYM", public_id: "9v3x6r7q2t5", preview: false },
       { title: "Advanced Functions", video_url: "https://www.youtube.com/watch?v=kr0mpwqttM0", public_id: "py6a1", preview: false },
-      { title: "Context Managers", video_url: "https://www.youtube.com/watch?v=-aKFBoZpiqA", public_id: "py6b2", preview: false },
-      { title: "Multithreading", video_url: "https://www.youtube.com/watch?v=IEEhzQoKtQU", public_id: "py6c3", preview: true },
+      { title: "Context Managers", video_url: "https://www.youtube.com/watch?v=-aKFBoZpiqA", public_id: "py6b2", preview: true },
+      { title: "Multithreading", video_url: "https://www.youtube.com/watch?v=IEEhzQoKtQU", public_id: "py6c3", preview: false },
       { title: "AsyncIO Basics", video_url: "https://www.youtube.com/watch?v=t5Bo1Je9EmE", public_id: "py6e5", preview: false },
       { title: "Pandas Deep Dive", video_url: "https://www.youtube.com/watch?v=vmEHCJofslg", public_id: "py6g7", preview: false }
     ],
@@ -219,7 +219,7 @@ module.exports = [
     level: "advanced",
     language: "english",
     subtitle: "Craft Visual Masterpieces: Elevate Your Design Skills with Creative Tools",
-    description: "Master graphic design tools and principles to create stunning visuals for digital and print media, exploring advanced techniques like vector illustration, color harmony, and composition for professional portfolios.",
+    description: "Master graphic design tools and principles to create stunning visuals for digital and print media, exploring advanced techniques like vector illustration, and composition for professional portfolios.",
     image_url: "https://images.pexels.com/photos/177598/pexels-photo-177598.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     public_id: "gd67890",
     welcomeMessage: "Hello creative minds! Let's craft beautiful visuals that tell compelling stories and stand out.",
@@ -231,7 +231,6 @@ module.exports = [
       { title: "Typography Basics", video_url: "https://www.youtube.com/watch?v=sByzHoiYFX0", public_id: "gd6b2", preview: true },
       { title: "Logo Design", video_url: "https://www.youtube.com/watch?v=wtIvu085uU0", public_id: "gd6c3", preview: false },
       { title: "Vector Illustration", video_url: "https://www.youtube.com/watch?v=3yM5uXp-T_0", public_id: "gd6d4", preview: false },
-      { title: "Color Harmony", video_url: "https://www.youtube.com/watch?v=9kQllLyXpc4", public_id: "gd6e5", preview: false },
       { title: "Project: Poster Creation", video_url: "https://www.youtube.com/watch?v=1PnVor36_40", public_id: "gd6g7", preview: false }
     ],
     students: []
@@ -245,7 +244,7 @@ module.exports = [
     level: "intermediate",
     language: "hebrew",
     subtitle: "Dominate Online: Advanced Tactics for Digital Success and Growth",
-    description: "Develop cutting-edge digital marketing strategies to boost brand presence, drive conversions, and engage audiences through social media, email campaigns, and analytics-driven decisions in a competitive online landscape.",
+    description: "Develop cutting-edge digital marketing strategies to boost brand presence, drive conversions, and engage audiences through social media, and analytics-driven decisions in a competitive online landscape.",
     image_url: "https://images.pexels.com/photos/905163/pexels-photo-905163.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     public_id: "dm11223",
     welcomeMessage: "Welcome ambitious marketers! Let's conquer the digital realm with smart strategies.",
@@ -253,10 +252,8 @@ module.exports = [
     objectives: "Master SEO and PPC for visibility, create engaging content strategies, analyze metrics for insights, run effective social campaigns, optimize conversion funnels for better results",
     isPublished: true,
     curriculum: [
-      { title: "Content Marketing", video_url: "https://www.youtube.com/watch?v=9sr1KQhoioc", public_id: "dm6a1", preview: true },
-      { title: "Social Media Ads", video_url: "https://www.youtube.com/watch?v=oml99n79SGA", public_id: "dm6b2", preview: false },
-      { title: "Analytics Tools", video_url: "https://www.youtube.com/watch?v=Fr26hBo2tP0", public_id: "dm6c3", preview: false },
-      { title: "Email Campaigns", video_url: "https://www.youtube.com/watch?v=ep7n9V4QMPk", public_id: "dm6d4", preview: false },
+      { title: "Content Marketing", video_url: "https://www.youtube.com/watch?v=0R_3iarc8IA&pp", public_id: "dm6a1", preview: true },
+      { title: "Social Media Ads", video_url: "https://www.youtube.com/watch?v=ol0v779BlAA&pp", public_id: "dm6b2", preview: false },
       { title: "Project: Campaign Plan", video_url: "https://www.youtube.com/watch?v=3JluqTojuME", public_id: "dm6g7", preview: false }
     ],
     students: []
@@ -278,12 +275,9 @@ module.exports = [
     objectives: "Understand relational models and normalization, write complex SQL queries, design efficient schemas, optimize database performance, handle transactions and security",
     isPublished: true,
     curriculum: [
-      { title: "SQL Basics", video_url: "https://www.youtube.com/watch?v=7Vtl2WggqOg", public_id: "sql6a1", preview: true },
-      { title: "Joins and Subqueries", video_url: "https://www.youtube.com/watch?v=9yeOJ0Z2u3k", public_id: "sql6b2", preview: false },
-      { title: "Database Design", video_url: "https://www.youtube.com/watch?v=ztHopE5Od5M", public_id: "sql6c3", preview: true },
-      { title: "Indexing and Optimization", video_url: "https://www.youtube.com/watch?v=S2hIgMwkSAp", public_id: "sql6d4", preview: false },
-      { title: "Stored Procedures", video_url: "https://www.youtube.com/watch?v=4MLViy8_7AA", public_id: "sql6e5", preview: true },
-      { title: "Project: E-commerce DB", video_url: "https://www.youtube.com/watch?v=2y9fWyVfft4", public_id: "sql6g7", preview: false }
+      { title: "SQL Basics", video_url: "https://www.youtube.com/watch?v=Cz3WcZLRaWc&pp", public_id: "sql6a1", preview: true },
+      { title: "Joins and Subqueries", video_url: "https://www.youtube.com/watch?v=Yh4CrPHVBdE&pp", public_id: "sql6b2", preview: false },
+      { title: "Database Design", video_url: "https://www.youtube.com/watch?v=W2Z7fbCLSTw&pp", public_id: "sql6c3", preview: false },
     ],
     students: []
   },
@@ -304,11 +298,11 @@ module.exports = [
     objectives: "Learn threat detection and prevention, implement firewalls and VPNs, understand encryption methods, conduct security audits, respond to incidents effectively",
     isPublished: true,
     curriculum: [
-      { title: "Threat Landscape", video_url: "https://www.youtube.com/watch?v=0tG7s_7lctk", public_id: "sec6a1", preview: true },
-      { title: "Encryption Basics", video_url: "https://www.youtube.com/watch?v=vpO8sblFTho", public_id: "sec6b2", preview: true },
-      { title: "Network Security", video_url: "https://www.youtube.com/watch?v=IkfggBV9DC8", public_id: "sec6c3", preview: false },
-      { title: "Ethical Hacking Intro", video_url: "https://www.youtube.com/watch?v=3zIjIuJA0cM", public_id: "sec6d4", preview: false },
-      { title: "Project: Security Audit", video_url: "https://www.youtube.com/watch?v=PlV2hIkLvG8", public_id: "sec6g7", preview: false }
+      { title: "Threat Landscape", video_url: "https://www.youtube.com/embed/a2fIhKpFWFA", public_id: "sec6a1", preview: true },
+      { title: "Encryption Basics", video_url: "https://www.youtube.com/embed/sqszvWKQCp8", public_id: "sec6b2", preview: true },
+      { title: "Network Security", video_url: "https://www.youtube.com/embed/nbG1km4qHi4", public_id: "sec6c3", preview: false },
+      { title: "Ethical Hacking Intro", video_url: "https://www.youtube.com/embed/9chKCUQ8_VQ", public_id: "sec6d4", preview: false },
+      { title: "Project: Security Audit", video_url: "https://www.youtube.com/embed/V67drkkk2aA", public_id: "sec6g7", preview: false }
     ],
     students: []
   },
@@ -331,10 +325,10 @@ module.exports = [
     curriculum: [
       { title: "What is AI?", video_url: "https://www.youtube.com/watch?v=_ZvnD73m40o", public_id: "ai6a1", preview: true },
       { title: "Neural Networks Basics", video_url: "https://www.youtube.com/watch?v=aircAruvnKk", public_id: "ai6b2", preview: false },
-      { title: "AI Ethics", video_url: "https://www.youtube.com/watch?v=7PKx3kS7f4A", public_id: "ai6c3", preview: false },
-      { title: "Machine Learning Overview", video_url: "https://www.youtube.com/watch?v=ukzFI9rgwfU", public_id: "ai6d4", preview: true },
+      { title: "AI Ethics", video_url: "https://www.youtube.com/watch?v=7PKx3kS7f4A", public_id: "ai6c3", preview: true },
+      { title: "Machine Learning Overview", video_url: "https://www.youtube.com/watch?v=ukzFI9rgwfU", public_id: "ai6d4", preview: false },
       { title: "AI Applications", video_url: "https://www.youtube.com/watch?v=ad79nYk2keg", public_id: "ai6e5", preview: false },
-      { title: "Project: Chatbot", video_url: "https://www.youtube.com/watch?v=9KkGzbF-JnU", public_id: "ai6g7", preview: false }
+      { title: "Project: Chatbot", video_url: "https://www.youtube.com/watch?v=KyQKTJhSIak", public_id: "ai6g7", preview: false }
     ],
     students: []
   },
@@ -355,12 +349,12 @@ module.exports = [
     objectives: "Master Kotlin syntax and features, design intuitive UIs with XML and Compose, integrate APIs and services, handle data storage with Room, publish apps to stores",
     isPublished: true,
     curriculum: [
-      { title: "Kotlin Basics", video_url: "https://www.youtube.com/watch?v=5flXf8nuq60", public_id: "md6a1", preview: true },
-      { title: "UI Design", video_url: "https://www.youtube.com/watch?v=BBWyXoCyJlA", public_id: "md6b2", preview: false },
-      { title: "API Integration", video_url: "https://www.youtube.com/watch?v=G0jO8n2R8D0", public_id: "md6c3", preview: false },
-      { title: "Data Storage", video_url: "https://www.youtube.com/watch?v=TeFm27jVGWA", public_id: "md6d4", preview: true },
-      { title: "Device Features", video_url: "https://www.youtube.com/watch?v=0zx_eFyHRbE", public_id: "md6e5", preview: true },
-      { title: "Project: Weather App", video_url: "https://www.youtube.com/watch?v=lmOFMz7meDk", public_id: "md6g7", preview: false }
+      { title: "Kotlin Basics", video_url: "https://www.youtube.com/embed/dzUc9vrsldM", public_id: "md6a1", preview: true },
+      { title: "UI Design", video_url: "https://www.youtube.com/embed/N-xuqy6x1Bw", public_id: "md6b2", preview: true },
+      { title: "API Integration", video_url: "https://www.youtube.com/embed/WXsD0ZgxjRw", public_id: "md6c3", preview: false },
+      { title: "Data Storage", video_url: "https://www.youtube.com/embed/FUJtVeixeJ0", public_id: "md6d4", preview: false },
+      { title: "Device Features", video_url: "https://www.youtube.com/embed/HjXJh_vHXFs", public_id: "md6e5", preview: false },
+      { title: "Project: Weather App", video_url: "https://www.youtube.com/embed/yGP8CejdNXI", public_id: "md6g7", preview: false }
     ],
     students: []
   },
@@ -381,12 +375,12 @@ module.exports = [
     objectives: "Learn Unity interface and assets, script behaviors in C#, implement physics and collisions, design levels and UI, deploy games to multiple platforms",
     isPublished: true,
     curriculum: [
-      { title: "Unity Basics", video_url: "https://www.youtube.com/watch?v=IlKaB1k9mWY", public_id: "gd6a1", preview: true },
+      { title: "Unity Basics", video_url: "https://www.youtube.com/watch?v=XtQMytORBmM&t", public_id: "gd6a1", preview: true },
       { title: "C# Scripting", video_url: "https://www.youtube.com/watch?v=pSiIHe2uZ2w", public_id: "gd6b2", preview: true },
-      { title: "Physics Engine", video_url: "https://www.youtube.com/watch?v=OK6ACLMdPt0", public_id: "gd6c3", preview: false },
+      { title: "Physics Engine", video_url: "https://www.youtube.com/watch?v=BtJfHoxAc4w&pp", public_id: "gd6c3", preview: false },
       { title: "Animations", video_url: "https://www.youtube.com/watch?v=211t6r12XPQ", public_id: "gd6d4", preview: false },
-      { title: "Multiplayer Basics", video_url: "https://www.youtube.com/watch?v=3yuBOBPr8a8", public_id: "gd6e5", preview: false },
-      { title: "Project: Platformer Game", video_url: "https://www.youtube.com/watch?v=on9nwbHs8vI", public_id: "gd6g7", preview: false }
+      { title: "Multiplayer Basics", video_url: "https://www.youtube.com/watch?v=KBBJqPL5-eU&pp", public_id: "gd6e5", preview: true },
+      { title: "Project: Platformer Game", video_url: "https://www.youtube.com/watch?v=GwCiGixlqiU&pp", public_id: "gd6g7", preview: false }
     ],
     students: []
   },
@@ -407,11 +401,11 @@ module.exports = [
     objectives: "Master common design patterns, implement agile and scrum processes, write comprehensive unit tests, manage version control with Git, refactor code for better readability",
     isPublished: true,
     curriculum: [
-      { title: "Design Patterns", video_url: "https://www.youtube.com/watch?v=v9ejT8FO-7I", public_id: "se6a1", preview: true },
-      { title: "Agile Methodology", video_url: "https://www.youtube.com/watch?v=Z9QbYZh1YXY", public_id: "se6b2", preview: false },
-      { title: "Testing Strategies", video_url: "https://www.youtube.com/watch?v=yn9oDthoIuU", public_id: "se6c3", preview: true },
+      { title: "Design Patterns", video_url: "https://www.youtube.com/watch?v=tv-_1er1mWI", public_id: "se6a1", preview: true },
+      { title: "Agile Methodology", video_url: "https://www.youtube.com/watch?v=zi7uGg6FVM4", public_id: "se6b2", preview: false },
+      { title: "Testing Strategies", video_url: "https://www.youtube.com/watch?v=u6QfIXgjwGQ", public_id: "se6c3", preview: false },
       { title: "Clean Code Practices", video_url: "https://www.youtube.com/watch?v=7EmboKQH8lM", public_id: "se6d4", preview: false },
-      { title: "Project: Refactoring Exercise", video_url: "https://www.youtube.com/watch?v=DC-pQPq0acs", public_id: "se6g7", preview: true }
+      { title: "Project: Refactoring Exercise", video_url: "https://www.youtube.com/watch?v=DC-pQPq0acs", public_id: "se6g7", preview: false }
     ],
     students: []
   }
