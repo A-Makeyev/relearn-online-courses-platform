@@ -35,10 +35,10 @@ app.use('/student/acquired-courses', acquiredCoursesRoutes)
 app.use('/student/course-progress', courseProgressRoutes)
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '/client/dist')))
-    app.get('*', (request, response) => response.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html')))
+    app.use(express.static(path.join(__dirname, '../client/dist')))
+    app.get('*', (request, response) => response.sendFile(path.resolve(__dirname, '../client/dist/index.html')))
 } else {
-    app.get('/', (request, response) => response.send('<h1 style="text-align: center margin-top: 20%">Server is Running</h1>'))
+    app.get('/', (request, response) => response.send('<h1 style="text-align: center; margin-top: 20%">Server is Running</h1>'))
 }
 
 app.use((err, req, res, next) => {
