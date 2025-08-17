@@ -464,7 +464,7 @@ function VideoPlayer({ url, videoId, onProgressUpdate, progressData, width = '10
                         played === 0 ? (
                             <Play className="w-10 h-10 absolute inset-0 m-auto scale-125 hover:scale-150 duration-300" />
                         ) : played === 1 ? (
-                            <RotateCcw className="w-10 h-10 absolute inset-0 m-auto scale-125 hover:scale-150 duration-300" />
+                            <Play className="w-10 h-10 absolute inset-0 m-auto scale-125 hover:scale-150 duration-300" />
                         ) : null
                     )}
                 </div>

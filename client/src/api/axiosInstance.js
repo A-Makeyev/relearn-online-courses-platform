@@ -2,9 +2,9 @@ import axios from "axios"
 
 
 const axiosInstance = axios.create({
-    baseURL: window.location.hostname.includes('rilon.onrender.com')
-    ? 'https://rilon.onrender.com'
-    : 'http://localhost:5000'
+    baseURL: window.location.hostname.includes('localhost')
+        ? 'http://localhost:5000'
+        : window.location.origin
 })
 
 axiosInstance.interceptors.request.use(config => {

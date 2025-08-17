@@ -1,20 +1,16 @@
-import { dirname, join, resolve } from 'path'
-import { fileURLToPath } from 'url'
-import { config } from 'dotenv'
-import cors from 'cors'
-import express from 'express'
-import mongoose from 'mongoose'
-import authRoutes from './routes/auth/index.js'
-import instructorMediaRoutes from './routes/instructor-routes/media-routes.js'
-import instructorCourseRoutes from './routes/instructor-routes/course-routes.js'
-import studentCourseRoutes from './routes/student-routes/course-routes.js'
-import studentOrderRoutes from './routes/student-routes/order-routes.js'
-import acquiredCoursesRoutes from './routes/student-routes/acquired-courses-routes.js'
-import courseProgressRoutes from './routes/student-routes/course-progress-routes.js'
+require('dotenv').config()
+const path = require('path')
+const cors = require('cors')
+const mongoose = require('mongoose')
+const express = require('express')
+const authRoutes = require('./routes/auth/index')
+const instructorMediaRoutes = require('./routes/instructor-routes/media-routes')
+const instructorCourseRoutes = require('./routes/instructor-routes/course-routes')
+const studentCourseRoutes = require('./routes/student-routes/course-routes')
+const studentOrderRoutes = require('./routes/student-routes/order-routes')
+const acquiredCoursesRoutes = require('./routes/student-routes/acquired-courses-routes')
+const courseProgressRoutes = require('./routes/student-routes/course-progress-routes')
 
-
-config()
-const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -39,10 +35,10 @@ app.use('/student/acquired-courses', acquiredCoursesRoutes)
 app.use('/student/course-progress', courseProgressRoutes)
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(join(__dirname, '..', 'client', 'dist')))
-    app.get('*', (req, res) => res.sendFile(resolve(__dirname, '..', 'client', 'dist', 'index.html')))
+    app.use(express.static(path.join(__dirname, '/client/dist')))
+    app.get('*', (request, response) => response.sendFile(path.resolve(__dirname, 'client', 'dist', 'index.html')))
 } else {
-    app.get('/', (req, res) => res.send('<h1 style="text-align: center margin-top: 20%">Server is Running</h1>'))
+    app.get('/', (request, response) => response.send('<h1 style="text-align: center margin-top: 20%">Server is Running</h1>'))
 }
 
 app.use((err, req, res, next) => {

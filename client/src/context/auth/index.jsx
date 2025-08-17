@@ -100,7 +100,6 @@ export default function AuthProvider({ children }) {
             isAuthenticated: false
         })
         localStorage.clear()
-        toast.info('Logged out', { position: 'top-center' })
     }
 
     useEffect(() => {

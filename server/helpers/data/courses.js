@@ -83,7 +83,7 @@ module.exports = [
   },
   {
     instructorId: "o1p2q3r4s5",
-    instructorName: "Anna Neitherway",
+    instructorName: "MrBeast",
     date: new Date("2024-09-01T16:00:00Z"),
     title: "SEO Masterclass",
     category: "marketing",
@@ -91,14 +91,14 @@ module.exports = [
     language: "english",
     subtitle: "Climb Search Rankings Like a Pro: Optimize Your Web Presence",
     description: "Master the essentials of SEO to skyrocket your website’s visibility, dominate search engines, and drive organic traffic with strategies that blend technical know-how and creative optimization techniques",
-    image_url: "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    image_url: "https://cdn.shopify.com/s/files/1/0840/8370/3830/articles/1603954182-seo-article-header.png?v=1714646999",
     public_id: "7q2t5r9w3v6",
     welcomeMessage: "Hello web optimizers! Ready to soar to the top of search rankings? Join me on this exciting journey to boost your site’s success with SEO mastery!",
     price: 79.90,
     objectives: "Unpack keyword strategies to target the right audience, perfect on-page SEO for maximum visibility, build powerful links to enhance authority, leverage SEO tools to streamline your efforts, track ranking progress to refine your approach",
     isPublished: true,
     curriculum: [
-      { title: "Just copy this guy", video_url: "https://www.youtube.com/watch?v=0e3GPea1Tyg", public_id: "seo6f6", preview: false }
+      { title: "Just copy whatever I do bro", video_url: "https://www.youtube.com/watch?v=0e3GPea1Tyg", public_id: "seo6f6", preview: true }
     ],
     students: []
   },
@@ -212,7 +212,7 @@ module.exports = [
   },
   {
     instructorId: "h6i7j8k9l0",
-    instructorName: "Michael Lee",
+    instructorName: "Anna Neitherway",
     date: new Date("2024-07-12T08:30:00Z"),
     title: "Graphic Design Essentials",
     category: "design",
@@ -268,7 +268,7 @@ module.exports = [
     language: "english",
     subtitle: "Master Data Storage: Build Robust Databases with Efficiency",
     description: "Learn SQL fundamentals to design, query, and manage relational databases efficiently, including advanced topics like indexing, stored procedures, and performance tuning for large-scale applications.",
-    image_url: "https://images.pexels.com/photos/270360/pexels-photo-270360.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    image_url: "https://images.pexels.com/photos/577585/pexels-photo-577585.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     public_id: "sql44556",
     welcomeMessage: "Hello data masters! Let's construct unbreakable databases from the ground up.",
     price: 95.25,
@@ -368,7 +368,7 @@ module.exports = [
     language: "hebrew",
     subtitle: "Create Games: Dive into Unity Engine for Immersive Worlds",
     description: "Build 2D and 3D games using Unity, covering scripting, physics, animations, and publishing to platforms, with focus on multiplayer features and optimization for performance.",
-    image_url: "https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    image_url: "https://blog.potenzaglobalsolutions.com/wp-content/uploads/2021/06/5-Rarely-Known-Advantages-And-Disadvantages-Of-Unity-Game-Development.jpg",
     public_id: "gd12345",
     welcomeMessage: "Welcome game creators! Let's turn wild ideas into playable adventures.",
     price: 260.80,
