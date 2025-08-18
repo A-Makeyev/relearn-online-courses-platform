@@ -205,7 +205,7 @@ function StudentCoursesPage() {
                                     </DropdownMenuRadioGroup>
                                 </DropdownMenuContent>
                             </DropdownMenu>
-                            <Button variant="outline" onClick={handleFiltersReset}>
+                            <Button variant="outline" onClick={handleFiltersReset} disabled={Object.keys(filters).length === 0}>
                                 <RotateCcw />
                                 Reset
                             </Button>
