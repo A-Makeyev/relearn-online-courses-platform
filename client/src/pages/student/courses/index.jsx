@@ -60,20 +60,22 @@ function StudentCoursesPage() {
     }
 
     function handleFiltersChange(section, option) {
-        let copyFilters = { ...filters }
-        const sectionValues = copyFilters[section] || []
+        setFilters(prevFilters => {
+            const copyFilters = { ...prevFilters }
+            const sectionValues = copyFilters[section] || []
 
-        if (!sectionValues.includes(option.id)) {
-            copyFilters[section] = [...sectionValues, option.id]
-        } else {
-            copyFilters[section] = sectionValues.filter(id => id !== option.id)
-        }
+            if (!sectionValues.includes(option.id)) {
+                copyFilters[section] = [...sectionValues, option.id]
+            } else {
+                copyFilters[section] = sectionValues.filter(id => id !== option.id)
+            }
 
-        if (copyFilters[section].length === 0) {
-            delete copyFilters[section]
-        }
+            if (copyFilters[section].length === 0) {
+                delete copyFilters[section]
+            }
 
-        setFilters(copyFilters)
+            return copyFilters
+        })
     }
 
     function updateSearchParams(filterParams) {
@@ -130,16 +132,11 @@ function StudentCoursesPage() {
                                 <div className="space-y-3">
                                     { filterOptions[item].map(option => (
                                         <Label key={option.id} className="flex font-medium items-center gap-3">
-                                            <Checkbox
-                                                onCheckedChange={() => handleFiltersChange(item, option)}
-                                                checked={
-                                                    filters &&
-                                                    Object.keys(filters).length > 0 &&
-                                                    filters[item] &&
-                                                    filters[item].indexOf(option.id) > -1
-                                                }
-                                            />
-                                            { option.label }
+                                        <Checkbox
+                                            onCheckedChange={() => handleFiltersChange(item, option)}
+                                            checked={filters[item]?.includes(option.id) ?? false}
+                                        />
+                                        { option.label }
                                         </Label>
                                     ))}
                                 </div>
