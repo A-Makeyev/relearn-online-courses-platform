@@ -91,7 +91,7 @@ module.exports = [
     language: "english",
     subtitle: "Climb Search Rankings Like a Pro: Optimize Your Web Presence",
     description: "Master the essentials of SEO to skyrocket your website’s visibility, dominate search engines, and drive organic traffic with strategies that blend technical know-how and creative optimization techniques",
-    image_url: "https://cdn.shopify.com/s/files/1/0840/8370/3830/articles/1603954182-seo-article-header.png?v=1714646999",
+    image_url: "https://channeleye.media/wp-content/uploads/2022/02/SEO-01-492x276.jpg",
     public_id: "7q2t5r9w3v6",
     welcomeMessage: "Hello web optimizers! Ready to soar to the top of search rankings? Join me on this exciting journey to boost your site’s success with SEO mastery!",
     price: 79.90,
