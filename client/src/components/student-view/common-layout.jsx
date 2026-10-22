@@ -1,14 +1,19 @@
-import { Outlet, useLocation } from "react-router-dom"
-import StudentHeader from "./header"
+import { Outlet, useLocation } from 'react-router-dom'
+import StudentHeader from './header'
+import StudentFooter from './footer'
 
 
 function StudentView() {
     const location = useLocation()
+    const isImmersive = location.pathname.includes('/course-progress')
 
     return (
-        <div>
-            { !location.pathname.includes('/course-progress') ? <StudentHeader /> : null}
-            <Outlet />
+        <div className="flex min-h-screen flex-col bg-background">
+            {!isImmersive && <StudentHeader />}
+            <main className="flex-1">
+                <Outlet />
+            </main>
+            {!isImmersive && <StudentFooter />}
         </div>
     )
 }

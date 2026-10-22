@@ -23,11 +23,11 @@ import {
 import ReactPlayer from "react-player"
 
 
-function VideoPlayer({ url, videoId, onProgressUpdate, progressData, width = '100%', height = '100%' }) {
+function VideoPlayer({ url, videoId, onProgressUpdate, progressData, width = '100%', height = '100%', initiallyMuted = false, defaultMuted = false }) {
     const [played, setPlayed] = useState(0)
     const [volume, setVolume] = useState(1)
-    const [prevVolume, setPrevVolume] = useState(volume)
-    const [muted, setMuted] = useState(false)
+    const [prevVolume, setPrevVolume] = useState(defaultMuted ? 0 : 1)
+    const [muted, setMuted] = useState(defaultMuted)
     const [playing, setPlaying] = useState(false)
     const [seeking, setSeeking] = useState(false)
     const [fullScreen, setFullScreen] = useState(false)
@@ -327,7 +327,7 @@ function VideoPlayer({ url, videoId, onProgressUpdate, progressData, width = '10
     }, [played])
 
     useEffect(() => {
-        setShowLayer(prev => !playing && (played === 0 || played === 1))
+        setShowLayer(!playing && (played === 0 || played === 1))
     }, [playing, played])
 
     useEffect(() => {
@@ -443,8 +443,8 @@ function VideoPlayer({ url, videoId, onProgressUpdate, progressData, width = '10
             >
                 <ReactPlayer
                     url={url}
-                    muted={muted}
-                    volume={volume}
+                    muted={muted || initiallyMuted}
+                    volume={muted || initiallyMuted ? 0 : volume}
                     ref={playerRef}
                     controls={false}
                     playing={playing}
@@ -458,7 +458,7 @@ function VideoPlayer({ url, videoId, onProgressUpdate, progressData, width = '10
                 />
                 <div
                     onClick={handlePlayAndPause}
-                    className={`${showLayer ? "opacity-100 z-50" : "opacity-0 z-0"} absolute bg-black/30 text-white w-full h-full transition-opacity duration-300 cursor-pointer`}
+                    className={`${showLayer ? "opacity-100 z-50" : "opacity-0 z-0 pointer-events-none"} absolute inset-0 bg-black/40 text-white transition-opacity duration-200 cursor-pointer`}
                 >
                     { showLayer && (
                         played === 0 ? (
@@ -487,9 +487,9 @@ function VideoPlayer({ url, videoId, onProgressUpdate, progressData, width = '10
                 </div>
                 <div onClick={handlePlayAndPause} className="absolute bg-transparent w-full h-[calc(100%-4rem)] z-40 video-player"></div>
                 <div
-                    onMouseEnter={useCallback(() => setHoldControls(true), [])}
-                    onMouseLeave={useCallback(() => setHoldControls(false), [])}
-                    className={`${showControls || holdControls || !playing ? 'opacity-100' : 'opacity-0'} absolute block bottom-0 left-0 right-0 pb-2 z-40 bg-gray-800 transition-opacity duration-300`}
+                    onMouseEnter={() => setHoldControls(true)}
+                    onMouseLeave={() => setHoldControls(false)}
+                    className={`${showControls || holdControls || !playing ? 'opacity-100' : 'opacity-0'} absolute block bottom-0 left-0 right-0 pb-2 z-40 bg-gray-800/90 transition-opacity duration-200`}
                 >
                     <Slider
                         step={1}
@@ -626,12 +626,13 @@ function VideoPlayer({ url, videoId, onProgressUpdate, progressData, width = '10
                                         variant="none"
                                         className="text-white bg-transparent transition ease-in-out hover:scale-125"
                                         onClick={handleFullScreen}
+                                        aria-label={fullScreen ? 'Exit full screen' : 'Enter full screen'}
                                     >
-                                        {fullScreen ? <Minimize /> : <Maximize />}
+                                        {fullScreen ? <Minimize className="h-4 w-4" /> : <Maximize className="h-4 w-4" />}
                                     </Button>
                                 </TooltipTrigger>
-                                <TooltipContent>
-                                    { fullScreen ? 'Exit Full Screen (F)' : 'Full Screen (F)' }
+                                <TooltipContent side="top" sideOffset={8}>
+                                    { fullScreen ? 'Exit full screen (F)' : 'Full screen (F)' }
                                 </TooltipContent>
                             </Tooltip>
                         </div>

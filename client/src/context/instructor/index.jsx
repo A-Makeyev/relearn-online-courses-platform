@@ -11,6 +11,7 @@ export default function InstructorProvider({ children }) {
     const [mediaUploadProgress, setMediaUploadProgress] = useState(false)
     const [currentEditedCourse, setCurrentEditedCourse] = useState(null)
     const [instructorCourses, setInstructorCourses] = useState([])
+    const [instructorOrders, setInstructorOrders] = useState(null)
     const [loading, setLoading] = useState(true)
 
     return (
@@ -25,6 +26,8 @@ export default function InstructorProvider({ children }) {
             setMediaUploadProgressPercentage,
             instructorCourses, 
             setInstructorCourses,
+            instructorOrders,
+            setInstructorOrders,
             currentEditedCourse, 
             setCurrentEditedCourse,
             loading, 

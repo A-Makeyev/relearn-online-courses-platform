@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react"
 import { initialLoginFormData, initialRegisterFormData } from "@/config"
 import { login, register, verify } from '@/services'
-import { Skeleton } from "@/components/ui/skeleton"
+import { GraduationCap } from "lucide-react"
 import { toast } from "sonner"
 
 
@@ -121,7 +121,14 @@ export default function AuthProvider({ children }) {
                 logout
             }}
         >
-            { loading ? <Skeleton /> : children }
+            { loading ? (
+                <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-background">
+                    <span className="flex h-14 w-14 animate-pulse items-center justify-center rounded-2xl bg-brand-gradient text-white shadow-lg">
+                        <GraduationCap className="h-7 w-7" />
+                    </span>
+                    <p className="text-sm font-medium text-muted-foreground">Loading your learning space…</p>
+                </div>
+            ) : children }
         </AuthContext.Provider>
     )
 }

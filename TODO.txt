@@ -6,14 +6,14 @@ npm run import-data
 TODO:
 
 delete all assets of the course!!
-fix video fade out
-fix video fullscreen tooltip
-fix course objectives, make them an array or something
-fix muted video switch on course details?
-fix setActiveTab(item.value)
-add success and error pop ups -> search response?.success
-add cart, rating, sharing, likes?
-add instructor preview page
-change revenue to orders -> ?
-payment cancel page
+fix video fade out - DONE
+fix video fullscreen tooltip - DONE
+fix course objectives, make them an array or something - DONE
+fix muted video switch on course details? - DONE
+fix setActiveTab(item.value) - DONE
+add success and error pop ups -> search response?.success - DONE
+add cart, rating, sharing, likes? - PARTIAL (sharing, rating done)
+add instructor preview page - DONE
+change revenue to orders -> ? - DONE
+payment cancel page - DONE
 

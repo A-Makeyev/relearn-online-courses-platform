@@ -2,21 +2,21 @@ export const registerFormControls = [
   {
     name: 'email',
     label: 'Email',
-    placeholder: 'Enter your email',
+    placeholder: 'you@example.com',
     componentType: 'input',
     type: 'email'
   },
   {
     name: 'username',
     label: 'Username',
-    placeholder: 'Enter your username',
+    placeholder: 'How should we call you?',
     componentType: 'input',
     type: 'text'
   },
   {
     name: 'password',
     label: 'Password',
-    placeholder: 'Enter your password',
+    placeholder: 'At least 6 characters',
     componentType: 'input',
     type: 'password'
   },
@@ -26,7 +26,7 @@ export const loginFormControls = [
   {
     name: 'email',
     label: 'Email',
-    placeholder: 'Enter your email',
+    placeholder: 'you@example.com',
     componentType: 'input',
     type: 'email'
   },
@@ -63,6 +63,7 @@ export const courseLevelOptions = [
 
 export const courseCategories = [
   { id: 'marketing', label: 'Marketing' },
+  { id: 'design', label: 'Design' },
   { id: 'web-development', label: 'Web Development' },
   { id: 'backend-development', label: 'Backend Development' },
   { id: 'data-science', label: 'Data Science' },
@@ -111,14 +112,14 @@ export const courseLandingPageFormControls = [
     label: 'Subtitle',
     componentType: 'input',
     type: 'text',
-    placeholder: 'Enter course subtitle',
+    placeholder: 'A short, compelling one-liner',
   },
   {
     name: 'description',
     label: 'Description',
     componentType: 'textarea',
     type: 'text',
-    placeholder: 'Enter course description',
+    placeholder: 'What will students get from this course?',
   },
   {
     name: 'price',
@@ -132,7 +133,7 @@ export const courseLandingPageFormControls = [
     label: 'Objectives',
     componentType: 'textarea',
     type: 'text',
-    placeholder: 'Enter course objectives',
+    placeholder: 'Separate each learning objective with a comma',
   },
   {
     name: 'welcomeMessage',
@@ -166,10 +167,13 @@ export const courseCurriculumInitialFormData = [
 ]
 
 export const sortOptions = [
-  { id: 'title-a-z', label: 'Title: A to Z' },
-  { id: 'title-z-a', label: 'Title: Z to A' },
+  { id: 'newest', label: 'Newest' },
+  { id: 'most-reviewed', label: 'Most reviewed' },
+  { id: 'highest-rated', label: 'Highest rated' },
   { id: 'price-low-high', label: 'Price: Low to High' },
   { id: 'price-high-low', label: 'Price: High to Low' },
+  { id: 'title-a-z', label: 'Title: A to Z' },
+  { id: 'title-z-a', label: 'Title: Z to A' },
 ]
 
 export const filterOptions = {

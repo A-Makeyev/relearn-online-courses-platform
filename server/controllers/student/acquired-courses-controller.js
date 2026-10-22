@@ -4,13 +4,21 @@ const StudentCourses = require('../../models/StudentCourses')
 const getAcquiredCourses = async (req, res) => {
     try {
         const { studentId } = req.params
+
+        if (String(req.user._id) !== String(studentId)) {
+            return res.status(403).json({
+                success: false,
+                message: 'You can only view your own courses'
+            })
+        }
+
         const acquiredCourses = await StudentCourses.findOne({ userId: studentId })
 
         if (!acquiredCourses) {
             return res.status(200).json({
                 success: true,
                 message: 'No Acquired Courses',
-                data: null
+                data: []
             })
         }
 

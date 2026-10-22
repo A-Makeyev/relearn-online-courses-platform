@@ -3,6 +3,9 @@ const Order = require("../models/Order.js")
 const Course = require("../models/Course.js")
 const CourseProgress = require("../models/CourseProgress.js")
 const StudentCourses = require("../models/StudentCourses.js")
+const Review = require("../models/Review.js")
+const Certificate = require("../models/Certificate.js")
+const Wishlist = require("../models/Wishlist.js")
 const courses = require("../helpers/data/courses.js")
 const users = require("../helpers/data/users.js")
 const readline = require("readline")
@@ -26,6 +29,17 @@ const confirmAction = (message, callback) => {
     })
 }
 
+const wipeCollections = async () => {
+    await User.deleteMany()
+    await Order.deleteMany()
+    await Course.deleteMany()
+    await StudentCourses.deleteMany()
+    await CourseProgress.deleteMany()
+    await Review.deleteMany()
+    await Certificate.deleteMany()
+    await Wishlist.deleteMany()
+}
+
 const importData = async () => {
     try {
         const userCount = await User.countDocuments()
@@ -34,11 +48,7 @@ const importData = async () => {
         if (userCount > 0 || courseCount > 0) {
             confirmAction('❗ Are you sure you want to import new data? This will overwrite existing data', async () => {
                 try {
-                    await User.deleteMany()
-                    await Order.deleteMany()
-                    await Course.deleteMany()
-                    await StudentCourses.deleteMany()
-                    await CourseProgress.deleteMany()
+                    await wipeCollections()
 
                     await User.insertMany(users)
                     await Course.insertMany(courses)
@@ -75,12 +85,8 @@ const destroyData = async () => {
         }
         confirmAction('❗ Are you sure you want to delete everything from the database?', async () => {
             confirmAction('❗ This cannot be undone. Proceed? ', async () => {
-                await User.deleteMany()
-                await Order.deleteMany()
-                await Course.deleteMany()
-                await StudentCourses.deleteMany()
-                await CourseProgress.deleteMany()
-        
+                await wipeCollections()
+
                 console.log('✔️  DATA DESTROYED')
                 process.exit()
             })

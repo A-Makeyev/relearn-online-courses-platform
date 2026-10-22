@@ -1,27 +1,60 @@
-import { Input } from "../ui/input"
-import { Label } from "../ui/label"
-import { Textarea } from "../ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { useState } from 'react'
+import { Eye, EyeOff } from 'lucide-react'
+import { Input } from '../ui/input'
+import { Label } from '../ui/label'
+import { Textarea } from '../ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
 
 
 function FormControls({ formControls = [], formData, setFormData }) {
+  const [visibleFields, setVisibleFields] = useState({})
+
+  function updateField(name, value) {
+    setFormData({
+      ...formData,
+      [name]: value,
+    })
+  }
+
   function renderComponentByType(item) {
     let element = null
     const currentControlItemValue = formData[item.name] || ''
 
     switch (item.componentType) {
       case 'input':
-        element = (
+        element = item.type === 'password' ? (
+            <div className="relative">
+                <Input
+                    id={item.name}
+                    name={item.name}
+                    type={visibleFields[item.name] ? 'text' : 'password'}
+                    autoComplete="current-password"
+                    placeholder={item.placeholder}
+                    value={currentControlItemValue}
+                    className="pr-11"
+                    onChange={(event) => updateField(item.name, event.target.value)}
+                />
+                <button
+                    type="button"
+                    onClick={() => setVisibleFields(previous => ({
+                        ...previous,
+                        [item.name]: !previous[item.name]
+                    }))}
+                    className="absolute right-2 top-1/2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition hover:bg-muted hover:text-foreground"
+                    aria-label={visibleFields[item.name] ? 'Hide password' : 'Show password'}
+                >
+                    {visibleFields[item.name] ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+            </div>
+        ) : (
             <Input
                 id={item.name}
                 name={item.name}
                 type={item.type}
+                autoComplete={item.name === 'email' ? 'email' : 'off'}
                 placeholder={item.placeholder}
                 value={currentControlItemValue}
-                onChange={(event) => setFormData({
-                    ...formData,
-                    [item.name]: event.target.value,
-                })}
+                onChange={(event) => updateField(item.name, event.target.value)}
             />
         )
         break
@@ -30,10 +63,7 @@ function FormControls({ formControls = [], formData, setFormData }) {
         element = (
             <Select
                 value={currentControlItemValue}
-                onValueChange={(value) => setFormData({
-                    ...formData,
-                    [item.name]: value,
-                })}
+                onValueChange={(value) => updateField(item.name, value)}
             >
                 <SelectTrigger className="w-full">
                     <SelectValue placeholder={item.placeholder} />
@@ -59,10 +89,7 @@ function FormControls({ formControls = [], formData, setFormData }) {
                 placeholder={item.placeholder}
                 value={currentControlItemValue}
                 className="h-20 max-h-60"
-                onChange={(event) => setFormData({
-                    ...formData,
-                    [item.name]: event.target.value,
-                })}
+                onChange={(event) => updateField(item.name, event.target.value)}
             />
         )
         break
@@ -75,10 +102,7 @@ function FormControls({ formControls = [], formData, setFormData }) {
                 type={item.type}
                 placeholder={item.placeholder}
                 value={currentControlItemValue}
-                onChange={(event) => setFormData({
-                    ...formData,
-                    [item.name]: event.target.value,
-                })}
+                onChange={(event) => updateField(item.name, event.target.value)}
             />
         )
         break
