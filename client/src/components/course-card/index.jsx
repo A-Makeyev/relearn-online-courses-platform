@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
-import { Play, Users } from 'lucide-react'
+import { Play, Users, Heart } from 'lucide-react'
 import RatingStars from '@/components/rating-stars'
 import SaveCourseButton from '@/components/save-course-button'
+import LikeButton from '@/components/like-button'
+import { useCart } from '@/context/cart'
 import { getCategoryMeta, getLevelClass, getLectureLabel } from '@/lib/course-meta'
 import { adjustPrice, formatCompactNumber } from '@/utils'
 import { cn } from '@/lib/utils'
@@ -21,12 +23,15 @@ function CourseCard({ course, className, showCategory = true }) {
         curriculum = [],
         students = [],
         averageRating = 0,
-        reviewCount = 0
+        reviewCount = 0,
+        likes = 0
     } = course
 
     const meta = getCategoryMeta(category)
     const CategoryIcon = meta.icon
     const isBestseller = students.length >= 5
+    const { isInCart, addToCart, removeFromCart } = useCart()
+    const inCart = isInCart(_id)
 
     return (
         <div
@@ -36,10 +41,10 @@ function CourseCard({ course, className, showCategory = true }) {
                 className
             )}
         >
-            <SaveCourseButton
-                courseId={_id}
-                className="absolute right-3 top-3 z-20"
-            />
+            <div className="absolute top-3 right-3 flex gap-1 z-20">
+                <LikeButton courseId={_id} />
+                <SaveCourseButton courseId={_id} />
+            </div>
 
             <Link to={`/course/details/${_id}`} className="flex min-h-0 flex-1 flex-col">
                 <div className="relative aspect-video overflow-hidden bg-muted">
@@ -110,10 +115,17 @@ function CourseCard({ course, className, showCategory = true }) {
                         )}
                     </div>
 
-                    <div className="mt-auto flex items-end justify-between pt-4">
-                        <span className="text-lg font-bold tracking-tight">
-                            {Number(price) === 0 ? 'Free' : adjustPrice(price)}
-                        </span>
+                    <div className="mt-auto flex items-end justify-between gap-2 pt-4">
+                        <div className="flex items-center gap-2">
+                            <span className="text-lg font-bold tracking-tight">
+                                {Number(price) === 0 ? 'Free' : adjustPrice(price)}
+                            </span>
+                            {inCart && (
+                                <span className="flex h-5 items-center rounded-full bg-primary/10 px-2 text-[10px] font-semibold text-primary">
+                                    In cart
+                                </span>
+                            )}
+                        </div>
                         <span className="rounded-md bg-secondary px-2 py-1 text-[11px] font-semibold text-secondary-foreground">
                             {meta.label}
                         </span>

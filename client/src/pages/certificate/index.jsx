@@ -1,292 +1,164 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { verifyCertificate } from '@/services'
-import { LoadingSpinner } from '@/components/ui/loading-spinner'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { getCategoryMeta } from '@/lib/course-meta'
-import { cn } from '@/lib/utils'
-import {
-    ArrowLeft,
-    Award,
-    BadgeCheck,
-    CalendarDays,
-    Copy,
-    GraduationCap,
-    Link2,
-    Printer,
-    Search,
-    ShieldCheck
-} from 'lucide-react'
-import { toast } from 'sonner'
+import { useEffect, useState, useContext } from "react"
+import { AuthContext } from "@/context/auth"
+import { toast } from "sonner"
+import { formatDate, getInitials } from "@/utils"
+import { CertificateCanvas } from "./CertificateCanvas"
 
 
-const formatIssuedDate = (value) => {
-    if (!value) return ''
-    const date = new Date(value)
-    if (Number.isNaN(date.getTime())) return ''
-
-    return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-    })
-}
-
-function CertificatePage() {
-    const { code } = useParams()
-    const navigate = useNavigate()
-    const [certificate, setCertificate] = useState(null)
+export default function CertificatePage() {
+    const { auth } = useContext(AuthContext)
+    const [courseId, setCourseId] = useState(null)
+    const [course, setCourse] = useState(null)
     const [loading, setLoading] = useState(true)
-    const [lookupCode, setLookupCode] = useState('')
 
     useEffect(() => {
-        let cancelled = false
+        const id = sessionStorage.getItem("courseProgressId") || sessionStorage.getItem("viewingCourseId") || window.location.pathname.split("/certificate/")[1]
+        if (id) {
+            setCourseId(id)
+            loadCourse(id)
+        } else {
+            setLoading(false)
+        }
+    }, [])
 
-        async function load() {
-            setLoading(true)
-            setCertificate(null)
-
-            try {
-                const response = await verifyCertificate(code)
-
-                if (!cancelled && response?.success) {
-                    setCertificate(response.data)
-                }
-            } catch {
-                // 404 is handled by the not-found state below.
-            } finally {
-                if (!cancelled) setLoading(false)
+    async function loadCourse(id) {
+        try {
+            const response = await fetch(`/api/student/course/${id}`)
+            if (response.ok) {
+                const data = await response.json()
+                setCourse(data.data || data)
             }
+        } catch (error) {
+            console.error("Error loading course:", error)
+        } finally {
+            setLoading(false)
         }
-
-        if (code) load()
-
-        return () => {
-            cancelled = true
-        }
-    }, [code])
-
-    function handlePrint() {
-        window.print()
     }
 
-    function handleCopy() {
-        const url = window.location.href
-        navigator.clipboard?.writeText(url)
-            .then(() => toast.success('Verification link copied'))
-            .catch(() => toast.error('Could not copy the link'))
+    function handleCertificate() {
+        toast.success("Certificate generated!")
+        setCanvasReady(prev => !prev)
     }
 
-    function handleLookup(event) {
-        event.preventDefault()
-        const trimmed = lookupCode.trim().toUpperCase()
+    if (loading) return null
 
-        if (!trimmed) {
-            toast.error('Enter a certificate code first')
-            return
-        }
+    const initials = getInitials(auth?.user?.name || auth?.user?.username || "Student")
 
-        navigate(`/certificate/${encodeURIComponent(trimmed)}`)
+    const certificateData = {
+        name: auth?.user?.name || auth?.user?.username || "Student",
+        courseName: course?.title || "Course Title",
+        instructor: course?.instructorName || "Instructor",
+        date: formatDate(new Date()),
+        studentId: auth?.user?._id || "",
+        courseId: course?._id || courseId || "",
+        image_url: course?.image_url || "",
+        initials,
     }
-
-    if (loading) {
-        return (
-            <div className="flex min-h-screen items-center justify-center bg-slate-950">
-                <LoadingSpinner className="h-10 w-10 text-white" />
-            </div>
-        )
-    }
-
-    if (!certificate) {
-        return (
-            <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-950 px-4 py-16">
-                <div className="absolute inset-0 bg-dot-grid opacity-20" />
-                <div className="relative w-full max-w-md rounded-2xl border border-white/10 bg-slate-900 p-8 text-center text-white shadow-2xl">
-                    <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-white/10">
-                        <Search className="h-7 w-7" />
-                    </span>
-                    <h1 className="mt-5 text-xl font-bold">Certificate not found</h1>
-                    <p className="mt-2 text-sm text-slate-400">
-                        We could not verify <span className="font-mono text-slate-200">{code}</span>. Check the code
-                        printed on the certificate, or try another one.
-                    </p>
-                    <form onSubmit={handleLookup} className="mt-6 flex gap-2">
-                        <Input
-                            value={lookupCode}
-                            onChange={(event) => setLookupCode(event.target.value)}
-                            placeholder="EP-XXXX-XXXX"
-                            aria-label="Certificate code"
-                            className="border-white/15 bg-white/5 text-white placeholder:text-slate-500"
-                        />
-                        <Button type="submit">Verify</Button>
-                    </form>
-                    <Button asChild variant="ghost" className="mt-4 text-slate-300 hover:bg-white/10 hover:text-white">
-                        <Link to="/home">
-                            <ArrowLeft className="h-4 w-4" />
-                            Back to Easy Programming
-                        </Link>
-                    </Button>
-                </div>
-            </div>
-        )
-    }
-
-    const meta = getCategoryMeta(certificate.courseCategory)
-    const CategoryIcon = meta.icon
-    const issuedDate = formatIssuedDate(certificate.issuedAt)
-    const verifyUrl = `${window.location.origin}/certificate/${certificate.code}`
 
     return (
-        <div className="certificate-stage min-h-screen bg-slate-950 px-4 py-8 sm:px-6 sm:py-12">
-            <div className="no-print mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 pb-6">
-                <div className="flex items-center gap-2.5 text-white">
-                    <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-brand-gradient">
-                        <GraduationCap className="h-5 w-5" />
-                    </span>
-                    <div className="leading-tight">
-                        <p className="text-sm font-bold">Easy Programming</p>
-                        <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400">Certificate registry</p>
-                    </div>
+        <div className="min-h-screen bg-slate-950 text-white">
+            <div className="mx-auto max-w-5xl px-4 py-10 text-center sm:px-6 lg:px-8">
+                {/* Header */}
+                <div className="mb-10">
+                    <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Your Certificate</h1>
+                    <p className="mt-3 text-lg text-slate-400">
+                        Download and share your achievement
+                    </p>
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2">
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        className="border-white/20 bg-transparent text-slate-200 hover:bg-white/10 hover:text-white"
-                        onClick={handleCopy}
-                    >
-                        <Link2 className="h-4 w-4" />
-                        Copy link
-                    </Button>
-                    <Button size="sm" onClick={handlePrint}>
-                        <Printer className="h-4 w-4" />
-                        Print / Save PDF
-                    </Button>
-                </div>
-            </div>
-
-            <article className="certificate-sheet relative mx-auto max-w-4xl overflow-hidden rounded-2xl bg-[#fffdf7] text-slate-900 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] ring-1 ring-black/10">
-                <div className="h-2 w-full bg-brand-gradient" />
-
-                {/* Decorative frame */}
-                <div className="pointer-events-none absolute inset-3 rounded-lg border border-violet-900/15" />
-                <div className="pointer-events-none absolute inset-4 rounded-lg border border-violet-900/10" />
-
-                <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                    <GraduationCap className="h-72 w-72 text-violet-900/[0.04]" />
-                </div>
-
-                <div className="relative flex flex-col px-7 py-10 sm:px-14 sm:py-14">
-                    <header className="flex flex-col items-center text-center">
-                        <span className="flex h-12 w-12 items-center justify-center rounded-full bg-brand-gradient text-white shadow-lg">
-                            <Award className="h-6 w-6" />
-                        </span>
-                        <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.34em] text-violet-700">
-                            Certificate of completion
-                        </p>
-                        <h1 className="mt-3 font-serif text-3xl font-semibold tracking-tight sm:text-4xl">
-                            Easy Programming Academy
-                        </h1>
-                    </header>
-
-                    <div className="mt-8 text-center sm:mt-10">
-                        <p className="text-xs uppercase tracking-[0.22em] text-slate-500">This certifies that</p>
-                        <p className="mt-3 font-serif text-4xl font-semibold leading-tight text-slate-900 sm:text-5xl">
-                            {certificate.studentName}
-                        </p>
-                        <p className="mx-auto mt-5 max-w-xl text-sm leading-6 text-slate-600">
-                            has successfully completed every lecture of
-                        </p>
-                        <h2 className="mx-auto mt-2 max-w-2xl text-balance text-xl font-bold leading-snug text-violet-900 sm:text-2xl">
-                            {certificate.courseTitle}
-                        </h2>
-                        <p className="mt-3 text-sm text-slate-500">
-                            {certificate.lectureCount > 0 && (
-                                <>A {certificate.lectureCount}-lecture course · </>
-                            )}
-                            {certificate.courseCategory ? meta.label : 'Online learning'} · Issued {issuedDate}
-                        </p>
+                <div className="grid gap-8 lg:grid-cols-5">
+                    {/* Certificate Preview */}
+                    <div className="lg:col-span-3">
+                        <CertificateCanvas
+                            certificateData={certificateData}
+                        />
                     </div>
 
-                    <div className="mt-10 flex flex-col gap-8 sm:mt-12 sm:flex-row sm:items-end sm:justify-between">
-                        <div className="flex-1">
-                            <p className="font-serif text-2xl italic text-slate-800">{certificate.instructorName}</p>
-                            <div className="mt-1 h-px w-52 max-w-full bg-slate-300" />
-                            <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-slate-500">
-                                Course instructor
+                    {/* Actions Panel */}
+                    <div className="lg:col-span-2 space-y-6 lg:pl-8">
+                        <div className="rounded-xl border border-slate-700 bg-slate-900 p-5 shadow-lg">
+                            <h3 className="text-lg font-semibold">Share your achievement</h3>
+                            <p className="mt-2 text-sm text-slate-400">
+                                Share on social media or download for your portfolio
                             </p>
+
+                            <div className="mt-4 space-y-3">
+                                <button
+                                    type="button"
+                                    onClick={handleCertificate}
+                                    className="flex w-full items-center justify-center gap-2 rounded-lg bg-brand-gradient px-4 py-3 text-white shadow-lg transition hover:opacity-90 hover:shadow-xl"
+                                >
+                                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                    </svg>
+                                    Download Certificate
+                                </button>
+
+                                <button
+                                    type="button"
+                                    className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-600 bg-slate-800 px-4 py-3 text-sm text-slate-300 transition hover:bg-slate-700"
+                                >
+                                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M24 4.5c0-1.55-1.026-2.84-2.48-3.26C19.32 1.06 17.92 0 16.26.1c-1.26.08-2.4.68-3.12 1.56-4.58 6.06-6.94 9.88-7.06 11.38-.02.22-.12.38-.28.42-.76.24-1.54.44-2.34.56-.18-1.06-.6-2.04-1.32-2.84C1.68 9.26 1.16 8.08.96 6.96c-.24-1.34-.74-2.6-1.44-3.74-4.66-7.94-1.64-13.98 4.2-16.36 3.92-1.54 8.68-1.06 11.52 1.04 1.04.76 1.92 1.8 2.56 3.02.86 1.6 1.48 3.36 1.84 5.18.08.42.28.72.42.92.18.28.42.42.76.42.1.02.12.04.12.04L24 5.62l-.04.12zM4.5 9c-1.026 0-1.96.42-2.56 1.14-.82.94-1.2 2.08-1.06 3.22.14 1.18.72 2.2 1.6 3.04.92.88 2.12 1.36 3.34 1.4.2 0 .34.08.42.08s.12-.06.12-.06c.02-.02.02-.04.02-.04 1.46-.96 2.62-2.3 3.24-3.84.62-1.54.6-3.16-.04-4.68-1.54-3.5-1.54-6.28 0-7.86 1.66-1.57 4.06-1.84 5.92-.72 1.38.9 2.3 2.34 2.76 3.94.4 1.32.48 2.7.26 4.02-.24 1.5-.86 2.92-1.78 4.08-.96 1.2-2.18 2.14-3.54 2.74-1.42.64-2.96.86-4.52.66-1.18-.16-2.3-.7-3.1-1.44-.9-.86-1.56-1.96-1.56-3.34 0-1.22.54-2.3 1.54-3.22 1.46-1.38 3.48-2.08 5.72-2.08zM15.68 3.34c-1.46-.58-3.06-1.06-4.7-1.42-1.36-.3-2.76-.38-4.16-.22-.9.1-1.76.36-2.54.72-.96.44-1.82 1.1-2.5 1.88-1.28 1.48-1.84 3.36-1.66 5.34.16 1.72.72 3.36 1.6 4.86.9 1.54 2.2 2.8 3.76 3.58 1.52.78 3.18 1.12 4.86 1.08.28 0 .48.04.56.04.02 0 .02.02.02.02.14 0 .14-.02.14-.06 1.28-.56 2.36-1.44 3.18-2.6.86-1.2 1.38-2.6 1.52-4.14.12-1.28.04-2.56-.24-3.82-.3-.88-.78-1.68-1.46-2.32-.7-.66-1.54-1.12-2.46-1.4-.92-.28-1.9-.36-2.9-.24-.98.12-1.9.44-2.74.92C2.9 5.7 1.8 7.2 1.3 8.92c-.5 1.7.14 3.48 1.36 4.82s2.94 2.38 4.64 2.52c1.12.08 2.22-.04 3.26-.34.92-.26 1.76-.74 2.48-1.44s1.3-1.66 1.64-2.64c.36-1.08.54-2.24.54-3.44 0-1.2-.22-2.34-.66-3.42-.44-1.1-.92-2.06-1.46-2.88-.54-.82-1.22-1.5-1.98-2.02-1.1-.82-2.42-1.32-3.84-1.5-1.4-.18-2.82-.04-4.24.4-.14.06-.22.12-.3.18L4.9 11.64c.08.14.14.24.14.24z" />
+                                    </svg>
+                                    Share Certificate
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="flex flex-col items-center gap-1 sm:px-6">
-                            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-gradient text-white shadow-lg ring-4 ring-violet-900/10">
-                                <BadgeCheck className="h-8 w-8" />
-                            </span>
-                            <p className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-violet-800">
-                                Verified
-                            </p>
+                        <div className="rounded-xl border border-slate-700 bg-slate-900 p-5 shadow-lg">
+                            <h3 className="text-lg font-semibold">Certificate Details</h3>
+                            <div className="mt-4 space-y-3 text-sm">
+                                <div className="flex justify-between">
+                                    <span className="text-slate-400">Student</span>
+                                    <span className="font-medium">{certificateData.name}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-slate-400">Course</span>
+                                    <span className="font-medium truncate ml-4 max-w-[200px]">{certificateData.courseName}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-slate-400">Instructor</span>
+                                    <span className="font-medium">{certificateData.instructor}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-slate-400">Date Completed</span>
+                                    <span className="font-medium">{certificateData.date}</span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-slate-400">Certificate ID</span>
+                                    <span className="font-mono text-xs text-slate-500">{auth?.user?._id?.slice(-6) || "N/A"}</span>
+                                </div>
+                            </div>
                         </div>
 
-                        <div className="flex-1 sm:text-right">
-                            <p className="font-mono text-sm font-semibold tracking-wider text-slate-800">
-                                {certificate.code}
-                            </p>
-                            <div className="mt-1 h-px w-52 max-w-full bg-slate-300 sm:ml-auto" />
-                            <p className="mt-2 text-[11px] uppercase tracking-[0.18em] text-slate-500">
-                                Certificate ID
-                            </p>
+                        {/* Tips */}
+                        <div className="rounded-xl border border-emerald-700/50 bg-emerald-900/20 p-5">
+                            <h3 className="text-sm font-semibold text-emerald-400">Pro Tips</h3>
+                            <ul className="mt-3 space-y-2 text-xs text-slate-400">
+                                <li className="flex items-start gap-2">
+                                    <svg className="h-4 w-4 shrink-0 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                    Add your certificate to LinkedIn under "Licenses & certifications"
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <svg className="h-4 w-4 shrink-0 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                    Include in your portfolio or resume under "Certifications"
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <svg className="h-4 w-4 shrink-0 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414 1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                    </svg>
+                                    Share on Twitter/LinkedIn to celebrate your achievement
+                                </li>
+                            </ul>
                         </div>
                     </div>
-
-                    <footer className="mt-10 rounded-lg border border-violet-900/10 bg-violet-50/60 px-4 py-3 text-center">
-                        <p className="flex flex-wrap items-center justify-center gap-1.5 text-[11px] text-slate-600">
-                            <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" />
-                            Verify this certificate at
-                            <span className="font-mono text-[11px] font-semibold text-slate-800">{verifyUrl}</span>
-                        </p>
-                    </footer>
-                </div>
-            </article>
-
-            <div className="no-print mx-auto mt-6 flex max-w-4xl flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
-                <p className="text-xs text-slate-400">
-                    Tip: choose “Save as PDF” in the print dialog to download a shareable copy.
-                </p>
-                <div className="flex items-center gap-3 text-xs text-slate-400">
-                    <span className="flex items-center gap-1.5">
-                        <CalendarDays className="h-3.5 w-3.5" />
-                        Issued {issuedDate}
-                    </span>
-                    <Link
-                        to={certificate.courseId ? `/course/details/${certificate.courseId}` : '/courses'}
-                        className="flex items-center gap-1.5 font-semibold text-violet-300 transition hover:text-violet-200"
-                    >
-                        <CategoryIcon className="h-3.5 w-3.5" />
-                        View course
-                    </Link>
-                </div>
-            </div>
-
-            <div className="no-print mx-auto mt-10 flex max-w-4xl justify-center">
-                <div className="flex flex-wrap items-center justify-center gap-3 rounded-full border border-white/10 bg-white/[0.03] px-5 py-2.5 text-xs text-slate-400">
-                    <BadgeCheck className="h-4 w-4 text-emerald-400" />
-                    <span>
-                        Verified record · {certificate.studentName} · {certificate.code}
-                    </span>
-                    <span className={cn('h-1 w-1 rounded-full bg-slate-600')} />
-                    <button
-                        type="button"
-                        onClick={handleCopy}
-                        className="inline-flex items-center gap-1 font-semibold text-slate-300 transition hover:text-white"
-                    >
-                        <Copy className="h-3.5 w-3.5" />
-                        Copy link
-                    </button>
                 </div>
             </div>
         </div>
     )
 }
-
-export default CertificatePage
